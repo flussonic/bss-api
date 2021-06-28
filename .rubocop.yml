@@ -1,0 +1,6 @@
+inherit_gem:
+  rubocop-config:
+    - config/default.yml
+
+AllCops:
+  TargetRubyVersion: 3.0
