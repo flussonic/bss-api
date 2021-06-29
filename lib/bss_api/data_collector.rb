@@ -51,7 +51,7 @@ module BssApi
         end
     end
 
-    def class_name
+    def model_class
       @class_name ||= default_scope.model_name.name.constantize
     end
 
