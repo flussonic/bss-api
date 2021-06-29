@@ -49,7 +49,13 @@ module BssApi
     private
 
     def authenticate_api!
-      return if request.headers['Authorization'] == BssApi.configuration.api_key
+      api_key =
+        if BssApi.configuration.api_key_prefix.present?
+          "#{BssApi.configuration.api_key_prefix} #{BssApi.configuration.api_key}"
+        else
+          BssApi.configuration.api_key
+        end
+      return if request.headers['Authorization'] == api_key
 
       respond_to do |format|
         format.json { render status: 403, json: { error: 'denied' } }
