@@ -7,20 +7,45 @@ Unified API
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'bss_api'
+gem 'bss_api', git: 'https://github.com/flussonic/bss-api.git'
 ```
 
 And then execute:
 
     $ bundle install
 
-Or install it yourself as:
+### Configuration
 
-    $ gem install bss_api
+`api_key` - API token. *required*
+
+`api_key_prefix` - Prefix for API token. For example, 'Bearer'.
+
+`host_class` - Host model used in `BssApi::HostableDataCollector`.
+
+`log_class` - Model for logging API requests in `BssApi::HostableDataCollector`.
 
 ## Usage
 
-TODO: Write usage instructions here
+### Create decorator for your model
+
+It must be named `BssApi::Decorators::[model_name]::Decorator`, where _model_name_ is your model class name.
+
+### Create controller and routes
+
+#### Required controller methods
+
+`default_scope` - to determine the model and it's scope, that will be included to the result.
+
+`permitted_params` - to determine permitted parameters of model.
+
+#### Optional controller methods
+`data_collector` - class of the data collector. By default it is `BssApi::DataCollector`.
+
+`model_name` - name of model used for rendering the results and defining alias for id parameter.
+
+`model_id` - alias key for id parameter. By default it is `model_name` plus `_id`.
+
+`collection_name` - name of collection used for rendering the results (keys in JSON and filename in CSV).
 
 ## Development
 
