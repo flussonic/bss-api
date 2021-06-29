@@ -3,7 +3,7 @@
 require_relative 'lib/bss_api/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'bss-api'
+  spec.name          = 'bss_api'
   spec.version       = BssApi::VERSION
   spec.authors       = ['Kirill Usanov']
   spec.email         = ['kirill.usanov.dev@gmail.com']
