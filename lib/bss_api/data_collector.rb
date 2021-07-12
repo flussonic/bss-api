@@ -23,6 +23,8 @@ module BssApi
     end
 
     def collect
+      valid?
+
       objects.map do |obj|
         obj.extend(decorator_module)
         Hash[select_params.map { |k| [k, decorator.date_fields.include?(k) ? obj.public_send(k).to_i : obj.public_send(k)] }]
@@ -38,6 +40,12 @@ module BssApi
     end
 
     private
+
+    def valid?
+      filter_params
+      select_params
+      sort_params
+    end
 
     def objects
       @objects ||=
