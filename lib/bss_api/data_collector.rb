@@ -82,7 +82,7 @@ module BssApi
           permitted_attrs = attrs.select { |k, _| decorator.filter_fields.include?(k.to_s.gsub(suffixes_regexp, '')) }
           if permitted_attrs != attrs
             raise NotAllowedAttributesError,
-                  "Attributes #{attrs.keys - permitted_attrs.keys} not allowed for filtering."
+                  "Attributes [#{(attrs.keys - permitted_attrs.keys).sort.join(', ')}] not allowed for filtering."
           end
 
           permitted_attrs.map do |k, v|
@@ -109,7 +109,8 @@ module BssApi
           attrs = params[:sort]&.split(',')&.uniq || []
           permitted_attrs = attrs & decorator.sort_fields
           if permitted_attrs != attrs
-            raise NotAllowedAttributesError, "Attributes #{attrs - permitted_attrs} not allowed for sorting."
+            raise NotAllowedAttributesError,
+                  "Attributes [#{(attrs - permitted_attrs).sort.join(', ')}] not allowed for sorting."
           end
 
           Hash[permitted_attrs.map { |attr| attr.start_with?('-') ? [attr[1..-1], 'DESC'] : [attr, 'ASC'] }]
@@ -127,7 +128,8 @@ module BssApi
           permitted_attrs = attrs.any? ? (attrs & decorator.select_fields) : decorator.select_fields
           return permitted_attrs if permitted_attrs == attrs || permitted_attrs == decorator.select_fields
 
-          raise NotAllowedAttributesError, "Attributes #{attrs - permitted_attrs} not allowed for selecting."
+          raise NotAllowedAttributesError,
+                "Attributes [#{(attrs - permitted_attrs).sort.join(', ')}] not allowed for selecting."
         end
     end
 

@@ -1,7 +1,7 @@
 RSpec.shared_examples 'BSS: index params validation' do |api_key, methods:, forbidden_fields: []|
   before(:each) { request.headers['Authorization'] = api_key }
 
-  forbidden_fields = forbidden_fields.map(&:to_s) + %w[destroy]
+  forbidden_fields = (forbidden_fields.map(&:to_s) + %w[destroy]).sort
   forbidden_fields_string = forbidden_fields.join(',')
   methods.each do |method|
     context 'JSON' do
