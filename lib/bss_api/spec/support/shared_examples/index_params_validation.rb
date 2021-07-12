@@ -17,7 +17,7 @@ RSpec.shared_examples 'BSS: index params validation' do |api_key, methods:, forb
 
       it 'raises exception with invalid filter params' do
         params = Hash[forbidden_fields.map { |f| [f.to_sym, rand(10)] }]
-        public_send(method, :index, params: { **params, id: rand(10) }, format: :json)
+        public_send(method, :index, params: params.merge(id: rand(10)), format: :json)
         expect(json_response).to eq('error' => "Attributes #{forbidden_fields} not allowed for filtering.")
       end
     end
@@ -35,7 +35,7 @@ RSpec.shared_examples 'BSS: index params validation' do |api_key, methods:, forb
 
       it 'raises exception with invalid filter params' do
         params = Hash[forbidden_fields.map { |f| [f.to_sym, rand(10)] }]
-        public_send(method, :index, params: { **params, id: rand(10) }, format: :csv)
+        public_send(method, :index, params: params.merge(id: rand(10)), format: :csv)
         expect(csv_response).to eq([["Attributes #{forbidden_fields} not allowed for filtering."]])
       end
     end
