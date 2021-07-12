@@ -176,7 +176,7 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
 
         if select_fields.any? && decorator
           it 'selects users additional methods' do
-            public_send(method, :index, params: { select: select_fields_string, id: record2.id }, format: :csv)
+            public_send(method, :index, params: { select: select_fields_string, id: record2.id }, format: :json)
             record2.extend(decorator)
             expected_result = Hash[select_fields.map { |f| [f.to_s, record2.public_send(f)] }]
             expect(json_response).to eq(
