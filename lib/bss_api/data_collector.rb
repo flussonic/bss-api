@@ -33,8 +33,8 @@ module BssApi
 
     def doc
       {
-        'allowed for filter and sort' => decorator.allowed_fields.sort,
-        'allowed for select' => decorator.allowed_methods.sort,
+        'allowed for filter and sort' => decorator.filter_fields.sort,
+        'allowed for select' => decorator.select_fields.sort,
         'filtered by timestamp' => decorator.date_fields.sort
       }
     end
@@ -79,7 +79,7 @@ module BssApi
       @filter_params ||=
         begin
           attrs = params.except(*reserved_keys)
-          permitted_attrs = attrs.select { |k, _| decorator.allowed_fields.include?(k.to_s.gsub(suffixes_regexp, '')) }
+          permitted_attrs = attrs.select { |k, _| decorator.filter_fields.include?(k.to_s.gsub(suffixes_regexp, '')) }
           if permitted_attrs != attrs
             raise NotAllowedAttributesError,
                   "Attributes #{attrs.keys - permitted_attrs.keys} not allowed for filtering."
@@ -107,7 +107,7 @@ module BssApi
       @sort_params ||=
         begin
           attrs = params[:sort]&.split(',')&.uniq || []
-          permitted_attrs = attrs & decorator.allowed_sort_fields
+          permitted_attrs = attrs & decorator.sort_fields
           if permitted_attrs != attrs
             raise NotAllowedAttributesError, "Attributes #{attrs - permitted_attrs} not allowed for sorting."
           end
@@ -124,8 +124,8 @@ module BssApi
       @select_params ||=
         begin
           attrs = params[:select]&.split(',')&.uniq || []
-          permitted_attrs = attrs.any? ? (attrs & decorator.allowed_methods) : decorator.allowed_methods
-          return permitted_attrs if permitted_attrs == attrs || permitted_attrs == decorator.allowed_methods
+          permitted_attrs = attrs.any? ? (attrs & decorator.select_fields) : decorator.select_fields
+          return permitted_attrs if permitted_attrs == attrs || permitted_attrs == decorator.select_fields
 
           raise NotAllowedAttributesError, "Attributes #{attrs - permitted_attrs} not allowed for selecting."
         end

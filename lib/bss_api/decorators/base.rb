@@ -8,20 +8,20 @@ module BssApi
 
         class << self
 
-          def allowed_fields
-            @allowed_fields ||= model_class.column_names - forbidden_fields.map(&:to_s)
+          def filter_fields
+            @filter_fields ||= model_class.column_names - forbidden_fields.map(&:to_s)
           end
 
-          def allowed_methods
-            @allowed_methods ||= allowed_fields + permitted_methods
+          def select_fields
+            @select_fields ||= filter_fields + permitted_methods
+          end
+
+          def sort_fields
+            @sort_fields ||= filter_fields + filter_fields.map { |f| "-#{f}" }
           end
 
           def date_fields
             @date_fields ||= columns_with_types.select { |_, v| DATETIME_FORMATS.include?(v) }
-          end
-
-          def allowed_sort_fields
-            @allowed_sort_fields ||= allowed_fields + allowed_fields.map { |f| "-#{f}" }
           end
 
           def pattern_filter_columns
@@ -47,7 +47,7 @@ module BssApi
           end
 
           def columns_with_types
-            @columns_with_types ||= Hash[allowed_fields.map { |f| [f, model_class.type_for_attribute(f).type] }]
+            @columns_with_types ||= Hash[filter_fields.map { |f| [f, model_class.type_for_attribute(f).type] }]
           end
 
           # TODO: remove in Rails 6
