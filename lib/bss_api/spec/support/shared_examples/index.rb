@@ -34,7 +34,7 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
             "
           public_send(method, :index, params: { select: 'id' }, body: body, format: :json)
           expect(json_response).to eq(
-                                     'accounts' => [
+                                     collection_name => [
                                        { 'id' => record1.id },
                                        { 'id' => record2.id }
                                      ]
