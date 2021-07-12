@@ -100,7 +100,7 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
           it 'selects users additional methods' do
             public_send(method, :index, params: { select: select_fields_string, id: record2.id }, format: :csv)
             record2.extend(decorator)
-            expect(csv_response).to eq([select_fields.map { |f| record2.public_send(f).to_s }])
+            expect(csv_response).to eq([select_fields.map { |f| record2.public_send(f)&.to_s }])
           end
         end
       end
