@@ -9,7 +9,7 @@ module BssApi
         class << self
 
           def allowed_fields
-            @allowed_fields ||= (model_class.column_names - forbidden_fields).map(&:to_s)
+            @allowed_fields ||= model_class.column_names - forbidden_fields.map(&:to_s)
           end
 
           def allowed_methods
@@ -43,7 +43,7 @@ module BssApi
           end
 
           def permitted_methods
-            module_parent.public_instance_methods + model_methods
+            (module_parent.public_instance_methods + model_methods).map(&:to_s)
           end
 
           def columns_with_types
