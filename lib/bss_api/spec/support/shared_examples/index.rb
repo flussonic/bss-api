@@ -1,12 +1,14 @@
 RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory:, decorator: nil,
                                        pattern_fields: [], select_fields: []|
+  collection_name = subject_name.to_s.pluralize
+  model_id = "#{subject_name}_id"
+  select_fields_string = select_fields.join(',')
+
   let!(:record1) { create(factory) }
   let!(:record2) { create(factory) }
   let!(:record3) { create(factory) }
   let!(:record4) { create(factory) }
-  collection_name = subject_name.to_s.pluralize
-  model_id = "#{subject_name}_id"
-  select_fields_string = select_fields.join(',')
+
   before(:each) { request.headers['Authorization'] = api_key }
 
   methods.each do |method|
