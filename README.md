@@ -41,7 +41,7 @@ It must be named `BssApi::Decorators::[model_name]::Decorator`, where _model_nam
 #### Optional controller methods
 `data_collector` - class of the data collector. By default it is `BssApi::DataCollector`.
 
-`model_name` - name of model used for rendering the results and defining alias for id parameter. By default it is downcased model class name from `default_scope`.
+`model_name` - downcased name of model used for rendering the results and defining alias for id parameter. By default it is downcased model class name from `default_scope`.
 
 `model_id` - alias key for id parameter. By default it is `model_name` plus `_id`.
 
