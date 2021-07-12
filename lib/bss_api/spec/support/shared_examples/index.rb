@@ -19,7 +19,7 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
             #{record1.id}
             #{record2.id}
             "
-          public_send(method, :index, params: { select: 'id' }, body: body, format: :csv)
+          public_send(method, :index, params: { select: 'id', sort: 'id' }, body: body, format: :csv)
           expect(csv_response).to eq([
                                        [record1.id.to_s],
                                        [record2.id.to_s]
@@ -32,7 +32,7 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
             #{record1.id}
             #{record2.id}
             "
-          public_send(method, :index, params: { select: 'id' }, body: body, format: :json)
+          public_send(method, :index, params: { select: 'id', sort: 'id' }, body: body, format: :json)
           expect(json_response).to eq(
                                      collection_name => [
                                        { 'id' => record1.id },
@@ -44,7 +44,7 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
 
       context 'CSV response' do
         it 'selects collection' do
-          public_send(method, :index, params: { select: 'id' }, format: :csv)
+          public_send(method, :index, params: { select: 'id', sort: 'id' }, format: :csv)
           expect(csv_response).to eq([
                                        [record1.id.to_s],
                                        [record2.id.to_s],
@@ -64,7 +64,7 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
         end
 
         it 'selects and filters collection' do
-          public_send(method, :index, params: { select: 'id', id_ne: record1.id }, format: :csv)
+          public_send(method, :index, params: { select: 'id', sort: 'id', id_ne: record1.id }, format: :csv)
           expect(csv_response).to eq([
                                        [record2.id.to_s],
                                        [record3.id.to_s],
@@ -98,7 +98,7 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
 
       context 'JSON response' do
         it 'selects collection' do
-          public_send(method, :index, params: { select: 'id' }, format: :json)
+          public_send(method, :index, params: { select: 'id', sort: 'id' }, format: :json)
           expect(json_response).to eq(
                                      collection_name => [
                                        { 'id' => record1.id },
@@ -122,7 +122,7 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
         end
 
         it 'selects and filters users' do
-          public_send(method, :index, params: { select: 'id', id_ne: record1.id }, format: :json)
+          public_send(method, :index, params: { select: 'id', sort: 'id', id_ne: record1.id }, format: :json)
           expect(json_response).to eq(
                                      collection_name => [
                                        { 'id' => record2.id },
