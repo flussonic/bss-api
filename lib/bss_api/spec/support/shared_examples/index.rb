@@ -1,11 +1,12 @@
-RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory:, pattern_fields: []|
+RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory:, decorator: nil,
+                                       pattern_fields: [], select_fields: []|
   let!(:record1) { create(factory) }
   let!(:record2) { create(factory) }
   let!(:record3) { create(factory) }
   let!(:record4) { create(factory) }
   collection_name = subject_name.to_s.pluralize
   model_id = "#{subject_name}_id"
-
+  select_fields_string = select_fields.join(',')
   before(:each) { request.headers['Authorization'] = api_key }
 
   methods.each do |method|
@@ -94,6 +95,14 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
             expect(csv_response).to eq([[record3.id.to_s]])
           end
         end
+
+        if select_fields.any? && decorator
+          it 'selects users additional methods' do
+            public_send(method, :index, params: { select: select_fields_string, id: record2.id }, format: :csv)
+            record2.extend(decorator)
+            expect(csv_response).to eq([select_fields.map { |f| record2.public_send(f).to_s }])
+          end
+        end
       end
 
       context 'JSON response' do
@@ -162,6 +171,19 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
                                         { 'id' => record3.id }
                                       ]
                                     )
+          end
+        end
+
+        if select_fields.any? && decorator
+          it 'selects users additional methods' do
+            public_send(method, :index, params: { select: select_fields_string, id: record2.id }, format: :csv)
+            record2.extend(decorator)
+            expected_result = Hash[select_fields.map { |f| [f.to_s, record2.public_send(f)] }]
+            expect(json_response).to eq(
+                                       collection_name => [
+                                         expected_result
+                                       ]
+                                     )
           end
         end
       end
