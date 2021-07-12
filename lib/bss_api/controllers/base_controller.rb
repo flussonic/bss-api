@@ -15,7 +15,7 @@ module BssApi
         format.csv  { send_data generate_csv(@collection), filename: "#{collection_name}-#{Date.today}.csv" }
         format.any  { render status: 200, json: { collection_name => @collection } }
       end
-    rescue NotAllowedAttributesError, InvalidCollectionSizeError, HostNotFoundError, NotAllowedHostError => e
+    rescue BssApi::BaseError => e
       respond_to do |format|
         format.json { render status: 400, json: { error: e.message } }
         format.csv  { send_data csv_error(e), filename: "#{collection_name}-error.csv" }

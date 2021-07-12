@@ -2,18 +2,15 @@
 
 require_relative 'bss_api/version'
 require_relative 'bss_api/data_collector'
-require_relative 'bss_api/hostable_data_collector'
 require_relative 'bss_api/decorators/base'
 require_relative 'bss_api/controllers/base_controller'
 
 module BssApi
-  class NotAllowedAttributesError < StandardError; end
+  class BaseError < StandardError; end
 
-  class InvalidCollectionSizeError < StandardError; end
+  class NotAllowedAttributesError < BaseError; end
 
-  class HostNotFoundError < StandardError; end
-
-  class NotAllowedHostError < StandardError; end
+  class InvalidCollectionSizeError < BaseError; end
 
   class << self
 

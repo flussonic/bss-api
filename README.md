@@ -20,10 +20,6 @@ And then execute:
 
 `api_key_prefix` - Prefix for API token. For example, 'Bearer'.
 
-`host_class` - Host model used in `BssApi::HostableDataCollector`.
-
-`log_class` - Model for logging API requests in `BssApi::HostableDataCollector`.
-
 ## Usage
 
 ### Create decorator for your model
