@@ -15,6 +15,7 @@ PATH
     bss_api (0.1.1)
       rails (>= 5.0.7.2)
       rspec-rails (>= 4.0.0)
+      test-prof (>= 1.0.0)
 
 GEM
   remote: https://rubygems.org/

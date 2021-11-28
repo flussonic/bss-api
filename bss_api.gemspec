@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   # Register a new dependency of your gem
   spec.add_dependency 'rails', '>= 5.0.7.2'
   spec.add_dependency 'rspec-rails', '>= 4.0.0'
+  spec.add_dependency 'test-prof', '>= 1.0.0'
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
