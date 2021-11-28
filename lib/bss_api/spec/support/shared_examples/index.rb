@@ -1,5 +1,3 @@
-require 'test_prof/recipes/minitest/before_all'
-
 RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory:, decorator: nil,
                                        pattern_fields: [], select_fields: []|
   collection_name = subject_name.to_s.pluralize
