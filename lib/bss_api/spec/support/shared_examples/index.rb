@@ -4,10 +4,17 @@ RSpec.shared_examples 'BSS: index' do |api_key, methods:, subject_name:, factory
   model_id = "#{subject_name}_id"
   select_fields_string = select_fields.join(',')
 
-  let!(:record1) { create(factory) }
-  let!(:record2) { create(factory) }
-  let!(:record3) { create(factory) }
-  let!(:record4) { create(factory) }
+  before_all do
+    @record1 = create(factory)
+    @record2 = create(factory)
+    @record3 = create(factory)
+    @record4 = create(factory)
+  end
+
+  let(:record1) { @record1 }
+  let(:record2) { @record2 }
+  let(:record3) { @record3 }
+  let(:record4) { @record4 }
 
   before(:each) { request.headers['Authorization'] = api_key }
 

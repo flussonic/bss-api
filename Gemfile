@@ -10,3 +10,5 @@ gem 'rake', '~> 13.0'
 gem 'rspec'
 
 gem 'rubocop-config', git: 'https://github.com/flussonic/rubocop-config.git'
+
+gem 'test-prof', require: false
