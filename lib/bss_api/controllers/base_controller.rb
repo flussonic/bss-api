@@ -66,7 +66,7 @@ module BssApi
 
     def prepare_api_params
       @api_params = params.permit!.to_h
-      if request.content_type == 'text/csv' && csv_body_ids.present?
+      if request.media_type == 'text/csv' && csv_body_ids.present?
         @api_params[:id] = csv_body_ids
       elsif @api_params[model_id].present?
         @api_params[:id] ||= @api_params.delete(model_id)
